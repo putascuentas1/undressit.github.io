@@ -1,0 +1,644 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Minimal Hero Landing</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A sleek, dark, minimalist hero landing page with interactive eyes background, bold CTAs, contract address copy, and a floating X button.">
+  <meta name="theme-color" content="#0b0f16">
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* 
+      Minimal Hero Landing - Eyes Background + Floating X
+      Customize via CSS variables below.
+      Placeholders are marked with TIP comments for quick edits.
+    */
+    :root {
+      /* Palette */
+      --bg-1: hsl(220 28% 10%);
+      --bg-2: hsl(220 26% 12%);
+      --bg-3: hsl(222 24% 16%);
+
+      --text: hsl(210 20% 94%);
+      --muted: hsl(215 12% 70%);
+      --muted-2: hsl(215 10% 62%);
+
+      /* Accents (RGB triplets for alpha blending) */
+      --accent-rgb: 70 194 198;   /* TIP: Change for brand color (teal) */
+      --accent2-rgb: 99 102 241;  /* TIP: Secondary brand accent (indigo) */
+
+      /* UI */
+      --surface: hsl(220 22% 14%);
+      --surface-2: hsl(220 22% 16%);
+      --border: hsl(220 18% 24%);
+      --radius: 12px;
+      --shadow-lg: 0 18px 50px rgba(0, 0, 0, 0.45);
+      --focus-ring: 0 0 0 2px rgb(var(--accent-rgb) / 0.9), 0 0 0 6px rgb(var(--accent-rgb) / 0.18);
+    }
+
+    /* Base reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background: linear-gradient(120deg, var(--bg-1), var(--bg-2) 50%, var(--bg-3) 100%);
+      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Eyes canvas sits behind all content */
+    #bg-eyes {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      display: block;
+    }
+
+    /* Layout */
+    main {
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding: 32px 20px;
+    }
+    .container {
+      width: min(92vw, 860px);
+      display: grid;
+      gap: 24px;
+      background: rgba(18, 22, 30, 0.28);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(8px) saturate(1.05);
+      padding: 28px 28px 24px;
+    }
+
+    /* Hero text */
+    .eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgb(var(--accent-rgb));
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 999px;
+      padding: 6px 10px;
+      user-select: none;
+    }
+    h1 {
+      font-size: clamp(32px, 5vw, 64px);
+      line-height: 1.05;
+      margin: 6px 0 10px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .subtext {
+      color: var(--muted);
+      font-size: clamp(14px, 1.8vw, 18px);
+      line-height: 1.5;
+      display: grid;
+      gap: 6px;
+    }
+
+    /* CTA buttons (top row) */
+    .cta-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 4px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      font-weight: 600;
+      color: var(--text);
+      background: linear-gradient(180deg, var(--surface), var(--surface-2));
+      transition: transform 80ms ease, border-color 160ms ease, background-color 160ms ease, color 160ms ease, box-shadow 160ms ease;
+    }
+    .btn:hover {
+      border-color: rgba(255, 255, 255, 0.22);
+      background: linear-gradient(180deg, var(--surface-2), hsl(220 22% 17%));
+    }
+    .btn:active { transform: translateY(0.8px) scale(0.998); }
+    .btn:focus-visible {
+      outline: none;
+      box-shadow: var(--focus-ring);
+      border-color: rgb(var(--accent-rgb));
+    }
+    .btn.primary {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.06)),
+        linear-gradient(180deg, rgb(var(--accent-rgb) / 0.16), rgb(var(--accent-rgb) / 0.12));
+      border-color: rgb(var(--accent-rgb) / 0.55);
+    }
+    .btn.primary:hover {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.08)),
+        linear-gradient(180deg, rgb(var(--accent-rgb) / 0.22), rgb(var(--accent-rgb) / 0.16));
+      border-color: rgb(var(--accent-rgb) / 0.8);
+    }
+
+    /* Contract address strip */
+    .contract-strip {
+      margin-top: 8px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px;
+    }
+    .contract-meta {
+      display: grid;
+      gap: 6px;
+    }
+    .contract-label {
+      font-size: 12px;
+      color: var(--muted-2);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .contract-value {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 14px;
+      color: var(--text);
+      word-break: break-all;
+      user-select: all;
+    }
+    .copy-btn {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, var(--surface), var(--surface-2));
+      color: var(--text);
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 80ms ease, border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+      white-space: nowrap;
+    }
+    .copy-btn:hover { border-color: rgba(255,255,255,0.22); }
+    .copy-btn:active { transform: translateY(0.8px); }
+    .copy-btn:focus-visible { outline: none; box-shadow: var(--focus-ring); border-color: rgb(var(--accent-rgb)); }
+
+    /* Extra actions (below contract strip) - vertical stack, centered column */
+    .extra-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      width: min(100%, 520px);
+      justify-self: center;
+      margin-top: 4px;
+    }
+
+    /* Floating X (Twitter) button */
+    .fab-x {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      width: 56px;
+      height: 56px;
+      border-radius: 9999px;
+      background: linear-gradient(180deg, var(--surface), var(--surface-2));
+      border: 1px solid var(--border);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      transition: transform 120ms ease, border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+      z-index: 10;
+    }
+    .fab-x:hover {
+      border-color: rgba(255,255,255,0.25);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.45), 0 0 0 6px rgb(var(--accent-rgb) / 0.12) inset;
+      transform: translateY(-1px);
+    }
+    .fab-x:focus-visible {
+      outline: none;
+      box-shadow: var(--focus-ring), 0 10px 30px rgba(0,0,0,0.35);
+    }
+    .fab-x svg {
+      width: 22px;
+      height: 22px;
+      display: block;
+    }
+
+    /* Footer */
+    footer {
+      width: min(92vw, 860px);
+      margin: 20px auto 36px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    footer a {
+      color: rgb(var(--accent2-rgb));
+      text-decoration: none;
+      border-bottom: 1px dashed transparent;
+    }
+    footer a:hover { color: rgb(var(--accent-rgb)); border-color: rgb(var(--accent-rgb) / 0.4); }
+    footer a:focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: 6px; padding: 2px 4px; }
+
+    /* Accessibility */
+    .visually-hidden {
+      position: absolute !important;
+      height: 1px; width: 1px;
+      overflow: hidden; clip: rect(1px, 1px, 1px, 1px);
+      white-space: nowrap; border: 0; padding: 0; margin: -1px;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 720px) {
+      .cta-row { grid-template-columns: 1fr; }
+      .contract-strip {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .copy-btn { width: 100%; }
+      .container { padding: 22px 18px 18px; }
+      .fab-x { right: 18px; bottom: 18px; width: 52px; height: 52px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Interactive eyes background -->
+  <canvas id="bg-eyes" aria-hidden="true"></canvas>
+
+  <main>
+    <section class="container" aria-labelledby="hero-heading">
+      <!-- TIP: Eyebrow text -->
+      <span class="eyebrow" aria-hidden="true">Your Project</span>
+
+      <!-- TIP: Headline text -->
+      <h1 id="hero-heading">Build something simple. Ship it fast.</h1>
+
+      <!-- TIP: Subtext lines -->
+      <div class="subtext">
+        <p>Less noise. More shipping.</p>
+        <p>A minimalist hero template you can adapt in minutes.</p>
+      </div>
+
+      <nav class="cta-row" aria-label="Primary calls to action">
+        <!-- TIP: Update hrefs for your real destinations -->
+        <a class="btn primary" href="#buy" target="_blank" rel="noopener noreferrer" aria-label="Buy now (opens in a new tab)">Buy Now</a>
+        <a class="btn" href="#dex" target="_blank" rel="noopener noreferrer" aria-label="View on DEX Screener (opens in a new tab)">View on DEX Screener</a>
+      </nav>
+
+      <div class="contract-strip" role="group" aria-labelledby="contract-label">
+        <div class="contract-meta">
+          <span class="contract-label" id="contract-label">Contract Address</span>
+          <!-- TIP: Replace the address text below with your actual contract. -->
+          <div class="contract-value" id="contract-address" data-address="0x0000000000000000000000000000000000000000">0x0000000000000000000000000000000000000000</div>
+        </div>
+        <button class="copy-btn" id="copy-button" type="button" aria-live="polite" aria-label="Copy contract address to clipboard">Copy</button>
+      </div>
+
+      <!-- Extra actions: vertical, centered column -->
+      <nav class="extra-actions" aria-label="Extra actions">
+        <!-- TIP: Update labels and hrefs -->
+        <a class="btn" href="#" aria-label="Extra Action 1">Extra Action 1</a>
+        <a class="btn" href="#" aria-label="Extra Action 2">Extra Action 2</a>
+      </nav>
+    </section>
+  </main>
+
+  <!-- Floating X (Twitter) button -->
+  <!-- TIP: Replace href with your community URL -->
+  <a class="fab-x" href="https://twitter.com/your-handle" target="_blank" rel="noopener noreferrer" aria-label="Open our X (Twitter) community">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <!-- Simple X icon (inline SVG) -->
+      <path fill="currentColor" d="M18.3 2h3.2L14 10.3l8.2 11.7h-6.5L12 14.7 6.2 22H2.8L10 12.9 2 2h6.5l4.7 6.8L18.3 2z"/>
+    </svg>
+  </a>
+
+  <footer>
+    <p>
+      Disclaimer: The content on this website is provided for informational and illustrative purposes only.
+      It does not constitute financial, legal, or investment advice. Use at your own discretion.
+    </p>
+    <p>
+      Contact: <a href="mailto:hello@example.com">hello@example.com</a> • 
+      <span id="year"></span> &copy; Your Company. All rights reserved.
+    </p>
+  </footer>
+
+  <div class="visually-hidden" role="status" aria-live="polite" id="sr-feedback"></div>
+
+  <script>
+    (function () {
+      const canvas = document.getElementById('bg-eyes');
+      const ctx = canvas.getContext('2d', { alpha: true });
+
+      const mqReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const hasReduced = mqReduced.matches;
+      const mqFine = window.matchMedia('(pointer: fine)');
+
+      // Footer year
+      const yearEl = document.getElementById('year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // Copy to clipboard with feedback
+      const copyBtn = document.getElementById('copy-button');
+      const addrEl = document.getElementById('contract-address');
+      const srFeedback = document.getElementById('sr-feedback');
+
+      function setFeedback(text) {
+        if (copyBtn) copyBtn.textContent = text;
+        if (srFeedback) srFeedback.textContent = text;
+      }
+      async function copyAddress() {
+        const address = (addrEl?.dataset.address || addrEl?.textContent || '').trim();
+        if (!address) return;
+
+        let success = false;
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(address);
+            success = true;
+          } else {
+            throw new Error('Clipboard API not available');
+          }
+        } catch {
+          try {
+            const ta = document.createElement('textarea');
+            ta.value = address;
+            ta.setAttribute('readonly', '');
+            ta.style.position = 'fixed';
+            ta.style.top = '-9999px';
+            document.body.appendChild(ta);
+            ta.select();
+            success = document.execCommand && document.execCommand('copy');
+            document.body.removeChild(ta);
+          } catch {
+            success = false;
+          }
+        }
+        const originalText = 'Copy';
+        setFeedback(success ? 'Copied!' : 'Copy failed');
+        window.setTimeout(() => setFeedback(originalText), 1200);
+      }
+      if (copyBtn) copyBtn.addEventListener('click', copyAddress);
+
+      // ===== Interactive Eyes Background =====
+      let dpr = 1;
+      function sizeCanvas() {
+        dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1)); // cap DPR for perf
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        canvas.width = Math.floor(w * dpr);
+        canvas.height = Math.floor(h * dpr);
+        canvas.style.width = w + 'px';
+        canvas.style.height = h + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        layoutEyesFromCenter(); // reclamp on resize
+        if (hasReduced) drawOnce();
+      }
+
+      // Eye pair model
+      const eyes = [
+        { cx: 0, cy: 0, r: 0, pupil: { x: 0, y: 0 } },
+        { cx: 0, cy: 0, r: 0, pupil: { x: 0, y: 0 } },
+      ];
+      let pupilRadius = 12;
+      let margin = 2;
+      let eyeRadius = 40;
+      let separation = 0;
+
+      // Eye pair center (click to reposition). Initialized near top-center for first render.
+      let pairCenter = { x: window.innerWidth / 2, y: Math.max(window.innerHeight * 0.38, 120) };
+
+      // Compute radii and layout based on current pairCenter; clamp to keep fully visible
+      function layoutEyesFromCenter() {
+        const w = canvas.clientWidth;
+        const h = canvas.clientHeight;
+
+        // Scale eye radius with viewport (bounded)
+        eyeRadius = Math.max(26, Math.min(80, Math.floor(Math.min(w, h) * 0.08)));
+        const gap = Math.floor(eyeRadius * 1.4); // spacing between eye edges
+        separation = eyeRadius * 2 + gap;
+
+        // Clamp pair center so both eyes remain fully visible
+        const minX = eyeRadius + separation / 2;
+        const maxX = w - (eyeRadius + separation / 2);
+        const minY = eyeRadius;
+        const maxY = h - eyeRadius;
+
+        pairCenter.x = Math.min(Math.max(pairCenter.x, minX), Math.max(minX, maxX));
+        pairCenter.y = Math.min(Math.max(pairCenter.y, minY), Math.max(minY, maxY));
+
+        // Set eyes positions
+        const cx1 = pairCenter.x - separation / 2;
+        const cx2 = pairCenter.x + separation / 2;
+        const cy = pairCenter.y;
+
+        eyes[0].cx = cx1; eyes[0].cy = cy; eyes[0].r = eyeRadius;
+        eyes[1].cx = cx2; eyes[1].cy = cy; eyes[1].r = eyeRadius;
+
+        pupilRadius = Math.floor(eyeRadius * 0.35);
+        margin = 2;
+
+        // Ensure pupils are inside after layout changes
+        eyes.forEach(e => { e.pupil.x = e.cx; e.pupil.y = e.cy; });
+      }
+
+      // Pointer tracking and autopilot
+      let autopilot = !mqFine.matches; // true for touch/no-pointer
+      let pointerX = pairCenter.x;
+      let pointerY = pairCenter.y;
+
+      function onPointerMove(ev) {
+        if (hasReduced) return; // static in reduced motion
+        autopilot = false;
+        pointerX = ev.clientX;
+        pointerY = ev.clientY;
+        if (!running) start();
+      }
+      function onPointerLeave() {
+        if (hasReduced) return;
+        // Ease back towards center by parking target at pair center
+        pointerX = pairCenter.x;
+        pointerY = pairCenter.y;
+        if (!running) start();
+      }
+      function onPointerDown(ev) {
+        // Reposition eyes pair to the click/tap location, with clamping
+        pairCenter.x = ev.clientX;
+        pairCenter.y = ev.clientY;
+        layoutEyesFromCenter();
+        if (hasReduced) {
+          drawOnce();
+        } else {
+          // kick animation to ease pupils toward new target
+          if (!running) start();
+        }
+      }
+
+      // Gentle autopilot gaze around the pair center (for touch/no-pointer)
+      function autoTarget(time) {
+        const ax = (Math.sin(time * 0.5) + Math.sin(time * 0.23 + 1.2)) * 0.25;
+        const ay = (Math.cos(time * 0.37) + Math.sin(time * 0.17 + 0.6)) * 0.25;
+        pointerX = pairCenter.x + eyeRadius * 0.6 * ax;
+        pointerY = pairCenter.y + eyeRadius * 0.6 * ay;
+      }
+
+      function lerp(a, b, t) { return a + (b - a) * t; }
+
+      // Draw utilities
+      function drawEyesFrame() {
+        const w = canvas.clientWidth;
+        const h = canvas.clientHeight;
+        ctx.clearRect(0, 0, w, h);
+
+        // Render two eyes
+        eyes.forEach((eye) => {
+          const { cx, cy, r } = eye;
+
+          // Compute pupil target clamped inside the eye
+          const dx = pointerX - cx;
+          const dy = pointerY - cy;
+          const dist = Math.hypot(dx, dy) || 1;
+          const maxOffset = Math.max(0, r - pupilRadius - margin);
+          const ux = dx / dist;
+          const uy = dy / dist;
+          const tx = cx + ux * Math.min(dist, maxOffset);
+          const ty = cy + uy * Math.min(dist, maxOffset);
+
+          // Ease pupil towards target
+          eye.pupil.x = lerp(eye.pupil.x, tx, 0.14);
+          eye.pupil.y = lerp(eye.pupil.y, ty, 0.14);
+
+          // Eye white (sclera)
+          ctx.beginPath();
+          ctx.arc(cx, cy, r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.92)';
+          ctx.fill();
+
+          // Subtle inner shadow ring for depth
+          const grad = ctx.createRadialGradient(cx, cy, r * 0.6, cx, cy, r);
+          grad.addColorStop(0, 'rgba(0,0,0,0)');
+          grad.addColorStop(1, 'rgba(0,0,0,0.20)');
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(cx, cy, r, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Pupil
+          ctx.beginPath();
+          ctx.arc(eye.pupil.x, eye.pupil.y, pupilRadius, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(8, 12, 18, 1)';
+          ctx.fill();
+
+          // Pupil specular highlight
+          const hx = eye.pupil.x - pupilRadius * 0.3;
+          const hy = eye.pupil.y - pupilRadius * 0.3;
+          ctx.beginPath();
+          ctx.arc(hx, hy, Math.max(2, pupilRadius * 0.22), 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255,255,255,0.9)';
+          ctx.fill();
+
+          // Outline
+          ctx.beginPath();
+          ctx.arc(cx, cy, r, 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(0, 0, 0, 0.35)';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        });
+      }
+
+      // Static draw (reduced motion)
+      function drawOnce() {
+        // Center pupils in static mode
+        eyes.forEach(e => { e.pupil.x = e.cx; e.pupil.y = e.cy; });
+        const w = canvas.clientWidth, h = canvas.clientHeight;
+        ctx.clearRect(0, 0, w, h);
+
+        eyes.forEach((eye) => {
+          const { cx, cy, r } = eye;
+          // Eye white
+          ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.92)'; ctx.fill();
+          // Inner shadow
+          const grad = ctx.createRadialGradient(cx, cy, r * 0.6, cx, cy, r);
+          grad.addColorStop(0, 'rgba(0,0,0,0)'); grad.addColorStop(1, 'rgba(0,0,0,0.20)');
+          ctx.fillStyle = grad;
+          ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill();
+          // Pupil centered
+          ctx.beginPath(); ctx.arc(cx, cy, pupilRadius, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(8, 12, 18, 1)'; ctx.fill();
+          // Highlight
+          ctx.beginPath(); ctx.arc(cx - pupilRadius * 0.3, cy - pupilRadius * 0.3, Math.max(2, pupilRadius * 0.22), 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.fill();
+          // Outline
+          ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(0, 0, 0, 0.35)'; ctx.lineWidth = 1; ctx.stroke();
+        });
+      }
+
+      // Animation loop
+      let running = false;
+      let raf = 0;
+      function draw(t) {
+        const time = t * 0.001;
+
+        if (autopilot && !hasReduced) {
+          autoTarget(time);
+        }
+
+        drawEyesFrame();
+
+        if (!hasReduced) {
+          raf = requestAnimationFrame(draw);
+        } else {
+          running = false;
+        }
+      }
+      function start() {
+        if (running || hasReduced) return;
+        running = true;
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(draw);
+      }
+
+      // Initialize
+      sizeCanvas();
+
+      // Start animation if not reduced
+      if (!hasReduced) start();
+      else drawOnce();
+
+      // Events
+      window.addEventListener('resize', sizeCanvas, { passive: true });
+      window.addEventListener('pointermove', onPointerMove, { passive: true });
+      window.addEventListener('pointerleave', onPointerLeave, { passive: true });
+      window.addEventListener('pointerdown', onPointerDown, { passive: true });
+
+      // Note: In reduced-motion mode, eyes are static but still reposition on click/tap.
+      // On touch/no-pointer devices, autopilot wanders the gaze; taps reposition the pair.
+    })();
+  </script>
+</body>
+</html>
+
