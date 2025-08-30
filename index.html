@@ -3,17 +3,17 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>$WOAH — Web3 opaque asset hindsight</title>
+  <title>$WOAH — WEB3 OPAQUE ASSET HINDSIGHT</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Interactive landing with realtime floating messages and animated eyes background.">
   <meta name="theme-color" content="#071f1a">
+  <meta name="description" content="Interactive landing with animated eyes, realtime shared message bubbles, and a minimal hero.">
 
-  <!-- Fonts: Inter (UI), Space Grotesk (hero), Manrope (subtext) -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;600;700&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
 
-  <!-- Supabase JS v2 UMD (jsDelivr) -->
+  <!-- Supabase JS v2 UMD (working build) -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
   <!-- Favicon (SVG injected as Blob so no separate file is needed) -->
@@ -30,42 +30,28 @@
       <feMerge><feMergeNode in="off"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
     <radialGradient id="hl-left" gradientUnits="userSpaceOnUse" cx="147.5" cy="95.5" r="70">
-      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.38"/>
-      <stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0.12"/>
-      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.38"/><stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0.12"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="sh-left" gradientUnits="userSpaceOnUse" cx="196.5" cy="144.5" r="70">
-      <stop offset="0" stop-color="#000000" stop-opacity="0.24"/>
-      <stop offset="0.6" stop-color="#000000" stop-opacity="0.10"/>
-      <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="0" stop-color="#000" stop-opacity="0.24"/><stop offset="0.6" stop-color="#000" stop-opacity="0.10"/><stop offset="1" stop-color="#000" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="rim-left" gradientUnits="userSpaceOnUse" cx="172" cy="120" r="70">
-      <stop offset="0" stop-color="#000000" stop-opacity="0"/>
-      <stop offset="1" stop-color="#000000" stop-opacity="0.14"/>
+      <stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.14"/>
     </radialGradient>
     <radialGradient id="hl-right" gradientUnits="userSpaceOnUse" cx="263.5" cy="95.5" r="70">
-      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.38"/>
-      <stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0.12"/>
-      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="0" stop-color="#FFF" stop-opacity="0.38"/><stop offset="0.5" stop-color="#FFF" stop-opacity="0.12"/><stop offset="1" stop-color="#FFF" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="sh-right" gradientUnits="userSpaceOnUse" cx="312.5" cy="144.5" r="70">
-      <stop offset="0" stop-color="#000000" stop-opacity="0.24"/>
-      <stop offset="0.6" stop-color="#000000" stop-opacity="0.10"/>
-      <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="0" stop-color="#000" stop-opacity="0.24"/><stop offset="0.6" stop-color="#000" stop-opacity="0.10"/><stop offset="1" stop-color="#000" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="rim-right" gradientUnits="userSpaceOnUse" cx="288" cy="120" r="70">
-      <stop offset="0" stop-color="#000000" stop-opacity="0"/>
-      <stop offset="1" stop-color="#000000" stop-opacity="0.14"/>
+      <stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.14"/>
     </radialGradient>
     <radialGradient id="pupil-left" gradientUnits="userSpaceOnUse" cx="134" cy="120" r="26.6">
-      <stop offset="0" stop-color="#FF4F8A" stop-opacity="1"/>
-      <stop offset="0.6" stop-color="#FF709E" stop-opacity="0.92"/>
-      <stop offset="1" stop-color="#FF9EBC" stop-opacity="0.85"/>
+      <stop offset="0" stop-color="#FF4F8A"/><stop offset="0.6" stop-color="#FF709E" stop-opacity="0.92"/><stop offset="1" stop-color="#FF9EBC" stop-opacity="0.85"/>
     </radialGradient>
     <radialGradient id="pupil-right" gradientUnits="userSpaceOnUse" cx="250" cy="120" r="26.6">
-      <stop offset="0" stop-color="#FF4F8A" stop-opacity="1"/>
-      <stop offset="0.6" stop-color="#FF709E" stop-opacity="0.92"/>
-      <stop offset="1" stop-color="#FF9EBC" stop-opacity="0.85"/>
+      <stop offset="0" stop-color="#FF4F8A"/><stop offset="0.6" stop-color="#FF709E" stop-opacity="0.92"/><stop offset="1" stop-color="#FF9EBC" stop-opacity="0.85"/>
     </radialGradient>
   </defs>
   <g filter="url(#dropShadow)" stroke="#000" stroke-opacity="0.9" stroke-width="5" stroke-linejoin="round">
@@ -114,11 +100,12 @@
       --surface: hsl(165 20% 16%);
       --surface-2: hsl(165 20% 18%);
       --border: hsl(165 14% 28%);
+
       --radius: 12px;
       --shadow-lg: 0 18px 50px rgba(0, 0, 0, 0.45);
       --focus-ring: 0 0 0 2px rgb(var(--accent-rgb) / 0.9), 0 0 0 6px rgb(var(--accent-rgb) / 0.18);
 
-      --skin: #FAD6BE; /* bubble fill and eye skin color */
+      --skin: #FAD6BE; /* bubble outline reference color for visuals if needed */
     }
 
     *, *::before, *::after { box-sizing: border-box; }
@@ -164,7 +151,15 @@
       position: relative;
     }
 
-    /* Hero typography: three centered lines */
+    /* Hero: three uppercase centered lines in fixed width wrapper */
+    .hero-wrap {
+      width: clamp(320px, 84vw, 780px);
+      margin: 0 auto;
+      display: grid;
+      gap: 4px;
+      text-transform: uppercase;
+    }
+
     h1 {
       font-family: "Space Grotesk", "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
       font-size: clamp(38px, 6.5vw, 72px);
@@ -176,16 +171,15 @@
       text-shadow: 0 1px 1px rgba(0,0,0,0.35);
       text-align: center;
     }
-    .hero-lines { display: inline-grid; gap: 4px; }
-    .hero-line { display: block; }
-    .hero-tag {
+    .hero-line {
       display: block;
-      margin-top: 6px;
-      font-size: clamp(30px, 5.5vw, 56px);
-      font-weight: 800;
-      color: rgb(var(--accent-rgb));
-      text-shadow: 0 1px 1px rgba(0,0,0,0.35);
+      width: 100%;
+      text-align: center;
     }
+    /* Adjust letter-spacing so shorter lines visually match the longest line width */
+    .hero-l1 { letter-spacing: 0.18em; } /* $WOAH! (shortest) */
+    .hero-l2 { letter-spacing: 0.08em; } /* WEB3 OPAQUE (medium) */
+    .hero-l3 { letter-spacing: 0.02em; } /* ASSET HINDSIGHT (longest) */
 
     .subtext {
       font-family: "Manrope", "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
@@ -196,6 +190,9 @@
       gap: 6px;
       text-shadow: 0 1px 1px rgba(0,0,0,0.35);
       text-align: center;
+      text-transform: uppercase;
+      width: clamp(320px, 84vw, 780px);
+      margin: 0 auto;
     }
 
     .cta-row {
@@ -280,13 +277,15 @@
 
     .extra-actions { display: grid; grid-template-columns: 1fr; gap: 12px; width: 100%; justify-self: stretch; margin-top: 4px; }
 
-    /* Floating X button (opens message modal) */
+    /* Floating X button: now labeled visually "X?" */
     .fab-x {
       position: fixed;
       right: 24px;
       bottom: 24px;
-      width: 56px;
+      width: auto;
       height: 56px;
+      min-width: 56px;
+      padding: 0 16px;
       border-radius: 9999px;
       background: linear-gradient(180deg, var(--surface), var(--surface-2));
       border: 1px solid var(--border);
@@ -294,21 +293,28 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 8px;
       text-decoration: none;
       box-shadow: 0 10px 30px rgba(0,0,0,0.35);
       transition: transform 120ms ease, border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
       z-index: 20;
       cursor: pointer;
+      font-weight: 800;
     }
-    .fab-x:hover {
-      border-color: rgba(255,255,255,0.25);
-      box-shadow: 0 14px 40px rgba(0,0,0,0.45), 0 0 0 6px rgb(var(--accent-rgb) / 0.12) inset;
-      transform: translateY(-1px);
-    }
+    .fab-x:hover { border-color: rgba(255,255,255,0.25); box-shadow: 0 14px 40px rgba(0,0,0,0.45), 0 0 0 6px rgb(var(--accent-rgb) / 0.12) inset; transform: translateY(-1px); }
     .fab-x:focus-visible { outline: none; box-shadow: var(--focus-ring), 0 10px 30px rgba(0,0,0,0.35); }
     .fab-x svg { width: 22px; height: 22px; display: block; }
+    .fab-x .question {
+      font-family: "Space Grotesk", "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+      font-size: 22px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: currentColor;
+      display: inline-block;
+    }
 
-    /* Footer: enforce no background/effects */
+    /* Footer: center text and ensure full transparency across all children */
     footer {
       width: min(92vw, 860px);
       margin: 20px auto 36px;
@@ -320,8 +326,14 @@
       border: none !important;
       box-shadow: none !important;
       backdrop-filter: none !important;
+      text-align: center;
     }
-    footer *, footer p { background: transparent !important; }
+    footer *, footer p, footer a {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+    }
     footer a {
       color: rgb(var(--accent2-rgb));
       text-decoration: none;
@@ -398,13 +410,14 @@
     .msg-btn:hover:not(:disabled) { border-color: rgba(255,255,255,0.25); }
     .msg-btn:focus-visible { outline: none; box-shadow: var(--focus-ring); }
 
-    /* Floating chat bubble */
+    /* Floating chat bubble: outline-only overlapping eyes with masked center, larger size, random drift */
     .chat-bubble {
       position: fixed;
       z-index: 40;
       pointer-events: none;
       will-change: transform, opacity;
-      width: 240px; height: 130px;
+      width: 300px;
+      height: 160px;
       left: 0; top: 0;
       transform: translate(-100vw, 100vh) scale(0.96);
       opacity: 0;
@@ -414,39 +427,46 @@
       filter: drop-shadow(0 10px 30px rgba(0,0,0,0.35));
     }
     .chat-bubble .bubble-text {
-      position: absolute; inset: 0; display: grid; place-items: center; padding: 12px 16px;
-      color: #111; font: 700 16px/1.2 "Manrope", "Inter", system-ui, sans-serif; text-align: center;
-      text-shadow: none; word-break: break-word;
+      position: absolute; inset: 0; display: grid; place-items: center; padding: 14px 18px;
+      color: var(--text); font: 800 18px/1.25 "Manrope", "Inter", system-ui, sans-serif; text-align: center;
+      text-shadow: 0 1px 1px rgba(0,0,0,0.25);
+      word-break: break-word;
+      letter-spacing: 0.02em;
     }
 
-    @keyframes floatUp {
+    /* Random drifting path using custom properties --dx1, --dx2, --dx3 */
+    @keyframes floatDrift {
       0%   { transform: translate(var(--start-x), var(--start-y)) scale(0.96); opacity: 0; }
       10%  { opacity: 1; }
-      100% { transform: translate(var(--end-x), -10vh) scale(1.0); opacity: 0; }
+      30%  { transform: translate(calc(var(--start-x) + var(--dx1)), calc(var(--start-y) - 28vh)) scale(0.98); }
+      60%  { transform: translate(calc(var(--start-x) + var(--dx2)), calc(var(--start-y) - 58vh)) scale(1.0); }
+      100% { transform: translate(calc(var(--start-x) + var(--dx3)), calc(var(--start-y) - 92vh)) scale(1.02); opacity: 0; }
     }
-    .chat-bubble.animate { animation: floatUp 8s ease-in forwards; }
+    .chat-bubble.animate { animation: floatDrift 8s ease-in forwards; }
 
     @media (max-width: 720px) {
       .cta-row { grid-template-columns: 1fr; }
       .contract-strip { grid-template-columns: 1fr; gap: 10px; }
       .copy-btn { width: 100%; }
       .container { padding: 22px 18px 18px; }
-      .fab-x { right: 18px; bottom: 18px; width: 52px; height: 52px; }
-      .chat-bubble { width: 210px; height: 118px; }
+      .fab-x { right: 18px; bottom: 18px; height: 52px; padding: 0 14px; }
+      .fab-x svg { width: 20px; height: 20px; }
+      .fab-x .question { font-size: 20px; }
+      .chat-bubble { width: 260px; height: 140px; }
     }
   </style>
 </head>
 <body>
-  <!-- Eyes canvas -->
+  <!-- Interactive eyes background -->
   <canvas id="bg-eyes" aria-hidden="true"></canvas>
 
   <main>
     <section class="container" id="spawn-container" aria-labelledby="hero-heading">
-      <h1 id="hero-heading" aria-label="Web3 opaque asset hindsight $WOAH">
-        <span class="hero-lines">
-          <span class="hero-line">Web3 opaque</span>
-          <span class="hero-line">asset hindsight</span>
-          <span class="hero-tag">$WOAH!</span>
+      <h1 id="hero-heading" aria-label="$WOAH! WEB3 OPAQUE ASSET HINDSIGHT">
+        <span class="hero-wrap">
+          <span class="hero-line hero-l1">$WOAH!</span>
+          <span class="hero-line hero-l2">WEB3 OPAQUE</span>
+          <span class="hero-line hero-l3">ASSET HINDSIGHT</span>
         </span>
       </h1>
 
@@ -479,6 +499,7 @@
     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
       <path fill="currentColor" d="M18.3 2h3.2L14 10.3l8.2 11.7h-6.5L12 14.7 6.2 22H2.8L10 12.9 2 2h6.5l4.7 6.8L18.3 2z"/>
     </svg>
+    <span class="question">?</span>
   </button>
 
   <footer>
@@ -515,20 +536,30 @@
     </div>
   </div>
 
-  <!-- Live region for accessibility feedback -->
+  <!-- Live region for small feedback -->
   <div class="visually-hidden" role="status" aria-live="polite" id="sr-feedback"></div>
 
   <script>
-    // Constants: Supabase configuration
+    // Supabase project configuration
     const SUPABASE_URL = 'https://rpezcqtbvcigwkfhdiqy.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJwZXpjcXRidmNpZ3drZmhkaXF5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY1NzM4MDMsImV4cCI6MjA3MjE0OTgwM30.buOFS-VY6Pc2PsVs-7aQYfrei0YhWniuvhl7M_lm-fc';
 
+    // NOTE (server-side policy): to harden against banned words on the server,
+    // update the insert policy as:
+    // create policy "Public insert messages"
+    // on public.messages
+    // for insert
+    // with check (
+    //   char_length(text) between 1 and 100
+    //   and not (text ~* '(scam|rug)')
+    // );
+
     (function () {
-      // Safe access to Supabase UMD
+      // Safe Supabase client init (UMD)
       const { createClient } = window.supabase || {};
       const supa = createClient ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
-      // Elements and helpers
+      // Elements
       const canvas = document.getElementById('bg-eyes');
       const ctx = canvas.getContext('2d', { alpha: true });
       const container = document.getElementById('spawn-container');
@@ -543,10 +574,11 @@
       const msgSend = document.getElementById('msg-send');
       const msgCancel = document.getElementById('msg-cancel');
       const msgCount = document.getElementById('msg-count');
-      const srFeedback = document.getElementById('sr-feedback');
 
       const copyBtn = document.getElementById('copy-button');
       const addrEl = document.getElementById('contract-address');
+
+      const srFeedback = document.getElementById('sr-feedback');
 
       const mqReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
       const hasReduced = mqReduced.matches;
@@ -554,7 +586,7 @@
 
       function announce(text) { if (srFeedback) srFeedback.textContent = text; }
 
-      // Copy Address
+      // Copy address
       function setCopyFeedback(text) {
         if (copyBtn) copyBtn.textContent = text;
         announce(text);
@@ -611,7 +643,7 @@
         }
       });
 
-      // Message modal (X button)
+      // Message modal UX
       function openMsgModal() {
         msgInput.value = '';
         msgCount.textContent = '0 / 100';
@@ -632,17 +664,28 @@
       });
       msgCancel.addEventListener('click', closeMsgModal);
 
-      // Floating chat bubble
-      function spawnChatBubble(text) {
+      // Floating chat bubble (outline-only overlapping eyes with masked center)
+      function spawnChatBubble(text, opts = {}) {
         const bubble = document.createElement('div');
         bubble.className = 'chat-bubble';
 
-        const skin = getComputedStyle(document.documentElement).getPropertyValue('--skin').trim() || '#FAD6BE';
+        // SVG: two circle strokes, with masks to remove center lens stroke
         const svg = `
-<svg class="bubble-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 130" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-  <g fill="none" stroke="#000" stroke-width="5">
-    <circle cx="100" cy="65" r="48" fill="${skin}"/>
-    <circle cx="140" cy="65" r="48" fill="${skin}"/>
+<svg class="bubble-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 160" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+  <defs>
+    <!-- Masks to clip strokes to left/right halves, removing central overlap stroke -->
+    <mask id="maskLeft" maskUnits="userSpaceOnUse" x="0" y="0" width="300" height="160">
+      <rect x="0" y="0" width="150" height="160" fill="#fff"/>
+      <rect x="150" y="0" width="150" height="160" fill="#000"/>
+    </mask>
+    <mask id="maskRight" maskUnits="userSpaceOnUse" x="0" y="0" width="300" height="160">
+      <rect x="0" y="0" width="150" height="160" fill="#000"/>
+      <rect x="150" y="0" width="150" height="160" fill="#fff"/>
+    </mask>
+  </defs>
+  <g fill="none" stroke="#000" stroke-width="6">
+    <circle cx="130" cy="80" r="58" mask="url(#maskLeft)"/>
+    <circle cx="170" cy="80" r="58" mask="url(#maskRight)"/>
   </g>
 </svg>`;
         bubble.innerHTML = svg + '<div class="bubble-text"></div>';
@@ -650,21 +693,34 @@
 
         document.body.appendChild(bubble);
 
-        // Start position: near the X (fab) button
+        // Start position: near the X button
         const fabRect = fabX.getBoundingClientRect();
-        const startX = Math.max(8, fabRect.left - 160 + fabRect.width / 2);
-        const startY = Math.max(8, fabRect.top - 30);
-        const endX = Math.max(20, window.innerWidth * 0.25 - 60);
+        const startX = Math.max(8, fabRect.left - 200 + (fabRect.width / 2)); // tuned for 300px bubble
+        const startY = Math.max(8, fabRect.top - 40);
+
+        // Random horizontal drift parameters
+        const rand = (min, max) => Math.floor(min + Math.random() * (max - min + 1));
+        const dx1 = (opts.dx1 !== undefined) ? opts.dx1 : rand(-60, 60) + 'px';
+        const dx2 = (opts.dx2 !== undefined) ? opts.dx2 : rand(-90, 90) + 'px';
+        const dx3 = (opts.dx3 !== undefined) ? opts.dx3 : rand(-120, 120) + 'px';
 
         bubble.style.setProperty('--start-x', startX + 'px');
         bubble.style.setProperty('--start-y', startY + 'px');
-        bubble.style.setProperty('--end-x', endX + 'px');
+        bubble.style.setProperty('--dx1', dx1);
+        bubble.style.setProperty('--dx2', dx2);
+        bubble.style.setProperty('--dx3', dx3);
+
+        // Optional initial delay for staggered loads
+        const delay = opts.delayMs || 0;
+        if (delay > 0) {
+          bubble.style.animationDelay = delay + 'ms';
+        }
 
         bubble.classList.add('animate');
         bubble.addEventListener('animationend', () => bubble.remove(), { once: true });
       }
 
-      // Supabase Realtime: setup
+      // Supabase Realtime messaging
       const LOCAL_SOURCE_ID_KEY = 'woah_source_id';
       function uuidv4() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -673,42 +729,72 @@
         });
       }
       let sourceId = localStorage.getItem(LOCAL_SOURCE_ID_KEY);
-      if (!sourceId) {
-        sourceId = uuidv4();
-        localStorage.setItem(LOCAL_SOURCE_ID_KEY, sourceId);
-      }
+      if (!sourceId) { sourceId = uuidv4(); localStorage.setItem(LOCAL_SOURCE_ID_KEY, sourceId); }
 
+      // Track shown IDs to avoid duplicates
+      const shownIds = new Set();
+
+      // Rate limit: 1 per 4s
       let lastSend = 0;
       const SEND_INTERVAL_MS = 4000;
 
+      // Client-side banned words (silent block)
+      const bannedRe = /(scam|rug)/i;
+
       async function handleSend() {
         const now = Date.now();
-        if (now - lastSend < SEND_INTERVAL_MS) {
-          announce('Please wait a few seconds before sending another message.');
-          return;
-        }
-        const text = msgInput.value.trim().slice(0, 100);
+        if (now - lastSend < SEND_INTERVAL_MS) return; // silent rate limit
+        let text = msgInput.value.trim().slice(0, 100);
         if (text.length < 1 || text.length > 100) return;
+
+        // Silent banned words block
+        if (bannedRe.test(text)) { closeMsgModal(); return; }
 
         lastSend = now;
         closeMsgModal();
 
-        // Show locally immediately
-        spawnChatBubble(text);
-
-        // Insert into Supabase
         if (supa) {
           try {
-            const { error } = await supa.from('messages').insert([{ text, source_id: sourceId }]);
-            if (error) announce('Send failed: ' + error.message);
-          } catch (err) {
-            announce('Send failed.');
+            const { data, error } = await supa.from('messages')
+              .insert([{ text, source_id: sourceId }])
+              .select('id,text,created_at')
+              .limit(1);
+            if (error) return; // silent fail
+            const row = Array.isArray(data) ? data[0] : null;
+            if (row && row.id && !shownIds.has(row.id)) {
+              shownIds.add(row.id);
+              // Only spawn after successful insert
+              spawnChatBubble(row.text);
+            }
+          } catch (e) {
+            // silent on network error
           }
         }
       }
       msgSend.addEventListener('click', handleSend);
 
-      // Subscribe to realtime inserts
+      // Initial fetch: last 4, show in chronological order with stagger
+      (async function initialFetch() {
+        if (!supa) return;
+        try {
+          const { data, error } = await supa.from('messages')
+            .select('id,text,created_at')
+            .order('created_at', { ascending: false })
+            .limit(4);
+          if (error || !Array.isArray(data)) return;
+          // Show chronologically
+          const sorted = data.slice().reverse();
+          sorted.forEach((row, idx) => {
+            if (!row || !row.id || shownIds.has(row.id)) return;
+            shownIds.add(row.id);
+            spawnChatBubble(String(row.text || '').slice(0, 100), { delayMs: idx * 400 });
+          });
+        } catch (e) {
+          // ignore
+        }
+      })();
+
+      // Realtime subscription: INSERTs
       if (supa) {
         (async () => {
           try {
@@ -716,26 +802,27 @@
               .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, (payload) => {
                 try {
                   const row = payload.new || payload.record || {};
+                  const id = row.id;
                   const text = String(row.text || '').slice(0, 100);
                   const src = row.source_id || '';
-                  if (!text) return;
-                  if (src === sourceId) return; // avoid echo of own message
+                  if (!id || !text) return;
+                  if (src === sourceId) { shownIds.add(id); return; } // ignore own
+                  if (shownIds.has(id)) return;
+                  shownIds.add(id);
                   spawnChatBubble(text);
-                } catch (_e) {}
+                } catch {}
               });
-
             const status = await channel.subscribe();
             if (status !== 'SUBSCRIBED') {
-              // Soft hint if subscription not fully established
-              console.warn('Supabase Realtime not SUBSCRIBED:', status);
+              console.warn('Realtime subscription not SUBSCRIBED:', status);
             }
           } catch (e) {
-            console.error('Supabase subscribe failed:', e);
+            console.error('Realtime subscription failed:', e);
           }
         })();
       }
 
-      // ============ Interactive Eyes Canvas ============
+      // Eyes canvas (two-pass rendering, 40% overflow, reduced-motion respected)
       let dpr = 1;
       let containerRect = container.getBoundingClientRect();
 
@@ -760,7 +847,6 @@
         baseRadius = Math.max(24, Math.min(80, Math.floor(Math.min(w, h) * 0.08)));
       }
 
-      // Allow up to 40% of radius outside container
       const overflowFraction = 0.4;
 
       function clampPairCenterToContainer(center, r, sep) {
@@ -784,7 +870,7 @@
         computeBaseRadius();
         const r = baseRadius;
 
-        const gap = -Math.floor(r * 0.35); // negative gap for overlap
+        const gap = -Math.floor(r * 0.35); // overlap
         const separation = r * 2 + gap;
 
         const center = clampPairCenterToContainer({ x, y }, r, separation);
@@ -797,11 +883,7 @@
         const margin = Math.max(2, Math.floor(r * 0.04));
 
         const pair = {
-          center,
-          r,
-          separation,
-          pupilR,
-          margin,
+          center, r, separation, pupilR, margin,
           lineW: Math.max(2, Math.min(4, Math.floor(r * 0.06))),
           eyes: [
             { cx: leftCx, cy, r, pupil: { x: leftCx, y: cy } },
@@ -842,7 +924,7 @@
       const c0 = containerCenter();
       createPairAt(c0.x, c0.y);
 
-      // Pointer tracking
+      // Pointer
       let autopilot = !mqFine.matches;
       let pointerX = c0.x, pointerY = c0.y;
 
@@ -868,7 +950,7 @@
 
       function lerp(a, b, t) { return a + (b - a) * t; }
 
-      // Drawing utilities
+      // Draw eyeball + pupils
       function drawEyeball(eye, lineW) {
         const { cx, cy, r } = eye;
 
@@ -899,7 +981,6 @@
         rim.addColorStop(0, 'rgba(0,0,0,0)'); rim.addColorStop(1, 'rgba(0,0,0,0.14)');
         ctx.fillStyle = rim; ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill();
       }
-
       function drawPupil(eye, pupilR, lineW) {
         const px = eye.pupil.x, py = eye.pupil.y;
         const pg = ctx.createRadialGradient(px, py, 0, px, py, pupilR);
@@ -916,24 +997,14 @@
 
       function updatePupils() {
         for (let i = 0; i < pairs.length; i++) {
-          const pair = pairs[i];
-          const { pupilR, margin } = pair;
+          const pair = pairs[i]; const { pupilR, margin } = pair;
           for (let j = 0; j < pair.eyes.length; j++) {
-            const eye = pair.eyes[j];
-            const { cx, cy, r } = eye;
-
-            const dx = pointerX - cx;
-            const dy = pointerY - cy;
-            const dist = Math.hypot(dx, dy) || 1;
-
+            const eye = pair.eyes[j]; const { cx, cy, r } = eye;
+            const dx = pointerX - cx, dy = pointerY - cy, dist = Math.hypot(dx, dy) || 1;
             const maxOffset = Math.max(0, r - pupilR - margin);
-            const ux = dx / dist;
-            const uy = dy / dist;
-            const tx = cx + ux * Math.min(dist, maxOffset);
-            const ty = cy + uy * Math.min(dist, maxOffset);
-
-            eye.pupil.x = lerp(eye.pupil.x, tx, 0.18);
-            eye.pupil.y = lerp(eye.pupil.y, ty, 0.18);
+            const ux = dx / dist, uy = dy / dist;
+            const tx = cx + ux * Math.min(dist, maxOffset), ty = cy + uy * Math.min(dist, maxOffset);
+            eye.pupil.x = lerp(eye.pupil.x, tx, 0.18); eye.pupil.y = lerp(eye.pupil.y, ty, 0.18);
           }
         }
       }
@@ -941,72 +1012,41 @@
       function drawEyesFrameTwoPass() {
         const w = canvas.clientWidth, h = canvas.clientHeight;
         ctx.clearRect(0, 0, w, h);
-
-        // Pass 1: eyeballs
-        for (let i = 0; i < pairs.length; i++) {
-          const pair = pairs[i];
-          drawEyeball(pair.eyes[0], pair.lineW);
-          drawEyeball(pair.eyes[1], pair.lineW);
-        }
-
-        // Pass 2: pupils
-        for (let i = 0; i < pairs.length; i++) {
-          const pair = pairs[i];
-          drawPupil(pair.eyes[0], pair.pupilR, pair.lineW);
-          drawPupil(pair.eyes[1], pair.pupilR, pair.lineW);
-        }
+        // Eyeballs then pupils
+        for (let i = 0; i < pairs.length; i++) { const p = pairs[i]; drawEyeball(p.eyes[0], p.lineW); drawEyeball(p.eyes[1], p.lineW); }
+        for (let i = 0; i < pairs.length; i++) { const p = pairs[i]; drawPupil(p.eyes[0], p.pupilR, p.lineW); drawPupil(p.eyes[1], p.pupilR, p.lineW); }
       }
 
       function drawStaticFrameTwoPass() {
         const w = canvas.clientWidth, h = canvas.clientHeight;
         ctx.clearRect(0, 0, w, h);
-
-        // Center pupils first
         for (let i = 0; i < pairs.length; i++) {
           const p = pairs[i];
           p.eyes[0].pupil.x = p.eyes[0].cx; p.eyes[0].pupil.y = p.eyes[0].cy;
           p.eyes[1].pupil.x = p.eyes[1].cx; p.eyes[1].pupil.y = p.eyes[1].cy;
         }
-
-        // Eyeballs then pupils
-        for (let i = 0; i < pairs.length; i++) {
-          const pair = pairs[i];
-          drawEyeball(pair.eyes[0], pair.lineW);
-          drawEyeball(pair.eyes[1], pair.lineW);
-        }
-        for (let i = 0; i < pairs.length; i++) {
-          const pair = pairs[i];
-          drawPupil(pair.eyes[0], pair.pupilR, pair.lineW);
-          drawPupil(pair.eyes[1], pair.pupilR, pair.lineW);
-        }
+        for (let i = 0; i < pairs.length; i++) { const p = pairs[i]; drawEyeball(p.eyes[0], p.lineW); drawEyeball(p.eyes[1], p.lineW); }
+        for (let i = 0; i < pairs.length; i++) { const p = pairs[i]; drawPupil(p.eyes[0], p.pupilR, p.lineW); drawPupil(p.eyes[1], p.pupilR, p.lineW); }
       }
       function drawOnce() { drawStaticFrameTwoPass(); }
 
-      // Animation loop
       let running = false, raf = 0;
       function draw(t) {
         const time = t * 0.001;
         if (autopilot && !hasReduced) autoTarget(time);
-        updatePupils();
-        drawEyesFrameTwoPass();
-        if (!hasReduced) {
-          raf = requestAnimationFrame(draw);
-        } else {
-          running = false;
-        }
+        updatePupils(); drawEyesFrameTwoPass();
+        if (!hasReduced) { raf = requestAnimationFrame(draw); } else { running = false; }
       }
       function start() { if (running || hasReduced) return; running = true; cancelAnimationFrame(raf); raf = requestAnimationFrame(draw); }
 
-      // Init sizes and listeners
+      // Init
       sizeCanvas();
       if (!hasReduced) start(); else drawOnce();
-
       window.addEventListener('resize', () => { sizeCanvas(); }, { passive: true });
       window.addEventListener('scroll', () => { updateContainerRect(); relayoutAllPairs(); if (hasReduced) drawOnce(); }, { passive: true });
       window.addEventListener('pointermove', onPointerMove, { passive: true });
       window.addEventListener('pointerleave', onPointerLeave, { passive: true });
       container.addEventListener('pointerdown', onContainerPointerDown, { passive: true });
-
     })();
   </script>
 </body>
