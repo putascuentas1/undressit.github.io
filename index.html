@@ -23,10 +23,7 @@
     <filter id="dropShadow" x="-50%" y="-50%" width="200%" height="200%">
       <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur"/>
       <feOffset in="blur" dx="0" dy="8" result="off"/>
-      <feMerge>
-        <feMergeNode in="off"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
+      <feMerge><feMergeNode in="off"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
     <radialGradient id="hl-left" gradientUnits="userSpaceOnUse" cx="147.5" cy="95.5" r="70">
       <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.38"/>
@@ -92,7 +89,6 @@
         var link = document.getElementById('dynamic-favicon');
         if (link) link.href = url;
       } catch (e) {
-        // Fallback: inline data URL (minimal), if needed you could replace with a hosted /favicon.svg
         var link = document.getElementById('dynamic-favicon');
         if (link) link.href = 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
       }
@@ -104,19 +100,17 @@
       --bg-1: hsl(171 36% 8%);
       --bg-2: hsl(162 32% 10%);
       --bg-3: hsl(158 30% 12%);
-
       --text: hsl(160 16% 96%);
       --subtext: hsl(160 12% 84%);
-
       --accent-rgb: 16 185 129;
       --accent2-rgb: 20 184 166;
-
       --surface: hsl(165 20% 16%);
       --surface-2: hsl(165 20% 18%);
       --border: hsl(165 14% 28%);
       --radius: 12px;
       --shadow-lg: 0 18px 50px rgba(0, 0, 0, 0.45);
       --focus-ring: 0 0 0 2px rgb(var(--accent-rgb) / 0.9), 0 0 0 6px rgb(var(--accent-rgb) / 0.18);
+      --skin: #FAD6BE;
     }
 
     *, *::before, *::after { box-sizing: border-box; }
@@ -160,21 +154,31 @@
       position: relative;
     }
 
-    /* Eyebrow removed; leaving class unused (can be deleted) */
-    .eyebrow { display: none !important; }
+    .eyebrow { display: none !important; } /* removed */
 
-    /* Hero typography and alignment */
+    /* Hero: three lines, centered, sleek readable font */
     h1 {
       font-family: "Space Grotesk", "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-      font-size: clamp(36px, 6vw, 72px);
+      font-size: clamp(38px, 6.5vw, 72px);
       line-height: 1.06;
-      margin: 6px 0 10px;
+      margin: 6px 0 6px;
       font-weight: 800;
       letter-spacing: -0.01em;
       color: var(--text);
       text-shadow: 0 1px 1px rgba(0,0,0,0.35);
       text-align: center;
     }
+    .hero-lines { display: inline-grid; gap: 4px; }
+    .hero-line { display: block; }
+    .hero-tag {
+      display: block;
+      margin-top: 6px;
+      font-size: clamp(30px, 5.5vw, 56px);
+      font-weight: 800;
+      color: rgb(var(--accent-rgb));
+      text-shadow: 0 1px 1px rgba(0,0,0,0.35);
+    }
+
     .subtext {
       font-family: "Manrope", "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
       color: var(--subtext);
@@ -212,11 +216,7 @@
       background: linear-gradient(180deg, var(--surface-2), hsl(165 22% 20%));
     }
     .btn:active { transform: translateY(0.8px) scale(0.998); }
-    .btn:focus-visible {
-      outline: none;
-      box-shadow: var(--focus-ring);
-      border-color: rgb(var(--accent-rgb));
-    }
+    .btn:focus-visible { outline: none; box-shadow: var(--focus-ring); border-color: rgb(var(--accent-rgb)); }
     .btn.primary {
       background:
         linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.06)),
@@ -270,15 +270,9 @@
     .copy-btn:active { transform: translateY(0.8px); }
     .copy-btn:focus-visible { outline: none; box-shadow: var(--focus-ring); border-color: rgb(var(--accent-rgb)); }
 
-    .extra-actions {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      width: 100%;
-      justify-self: stretch;
-      margin-top: 4px;
-    }
+    .extra-actions { display: grid; grid-template-columns: 1fr; gap: 12px; width: 100%; justify-self: stretch; margin-top: 4px; }
 
+    /* X button now opens message modal */
     .fab-x {
       position: fixed;
       right: 24px;
@@ -295,20 +289,14 @@
       text-decoration: none;
       box-shadow: 0 10px 30px rgba(0,0,0,0.35);
       transition: transform 120ms ease, border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
-      z-index: 10;
+      z-index: 20;
+      cursor: pointer;
     }
-    .fab-x:hover {
-      border-color: rgba(255,255,255,0.25);
-      box-shadow: 0 14px 40px rgba(0,0,0,0.45), 0 0 0 6px rgb(var(--accent-rgb) / 0.12) inset;
-      transform: translateY(-1px);
-    }
-    .fab-x:focus-visible {
-      outline: none;
-      box-shadow: var(--focus-ring), 0 10px 30px rgba(0,0,0,0.35);
-    }
+    .fab-x:hover { border-color: rgba(255,255,255,0.25); box-shadow: 0 14px 40px rgba(0,0,0,0.45), 0 0 0 6px rgb(var(--accent-rgb) / 0.12) inset; transform: translateY(-1px); }
+    .fab-x:focus-visible { outline: none; box-shadow: var(--focus-ring), 0 10px 30px rgba(0,0,0,0.35); }
     .fab-x svg { width: 22px; height: 22px; display: block; }
 
-    /* Footer: ensure no background */
+    /* Footer: ensure no background of any kind */
     footer {
       width: min(92vw, 860px);
       margin: 20px auto 36px;
@@ -317,9 +305,12 @@
       line-height: 1.55;
       text-shadow: 0 1px 1px rgba(0,0,0,0.25);
       background: transparent !important;
-      border: none;
-      box-shadow: none;
+      border: none !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
     }
+    footer p, footer * { background: transparent !important; }
+
     footer a {
       color: rgb(var(--accent2-rgb));
       text-decoration: none;
@@ -329,22 +320,12 @@
     footer a:hover { color: rgb(var(--accent-rgb)); border-color: rgb(var(--accent-rgb) / 0.4); }
     footer a:focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: 6px; padding: 2px 4px; }
 
-    .visually-hidden {
-      position: absolute !important;
-      height: 1px; width: 1px;
-      overflow: hidden; clip: rect(1px, 1px, 1px, 1px);
-      white-space: nowrap; border: 0; padding: 0; margin: -1px;
-    }
+    .visually-hidden { position: absolute !important; height: 1px; width: 1px; overflow: hidden; clip: rect(1px, 1px, 1px, 1px); white-space: nowrap; border: 0; padding: 0; margin: -1px; }
 
-    /* Modal (in-page image viewer) */
+    /* Modal (image viewer) */
     .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 50;
+      position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+      display: none; align-items: center; justify-content: center; z-index: 50;
     }
     .modal-backdrop.open { display: flex; }
     .modal-dialog {
@@ -358,32 +339,79 @@
       position: relative;
       backdrop-filter: blur(6px) saturate(1.05);
     }
-    .modal-content {
-      display: grid;
-      place-items: center;
-      padding: 10px;
-      background: transparent;
-    }
-    .modal-content img {
-      max-width: 100%;
-      max-height: 78vh;
-      display: block;
-      border-radius: 8px;
-    }
+    .modal-content { display: grid; place-items: center; padding: 10px; background: transparent; }
+    .modal-content img { max-width: 100%; max-height: 78vh; display: block; border-radius: 8px; }
     .modal-close {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      padding: 8px 10px;
-      border-radius: 10px;
+      position: absolute; top: 10px; right: 10px; padding: 8px 10px; border-radius: 10px;
       border: 1px solid var(--border);
       background: linear-gradient(180deg, var(--surface), var(--surface-2));
-      color: var(--text);
-      font-weight: 600;
-      cursor: pointer;
+      color: var(--text); font-weight: 600; cursor: pointer;
     }
     .modal-close:hover { border-color: rgba(255,255,255,0.25); }
     .modal-close:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
+    /* Message modal (X button flow) */
+    .msg-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 60; }
+    .msg-backdrop.open { display: flex; }
+    .msg-dialog {
+      background: hsl(165 20% 12% / 0.95);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow-lg);
+      width: min(92vw, 520px);
+      padding: 16px;
+      display: grid; gap: 10px;
+      backdrop-filter: blur(6px) saturate(1.05);
+    }
+    .msg-title { font: 700 18px/1.2 "Inter", system-ui, sans-serif; margin: 4px 0 2px; }
+    .msg-input {
+      width: 100%; min-height: 96px; max-height: 180px; resize: vertical;
+      padding: 12px 12px;
+      border-radius: 12px; border: 1px solid var(--border);
+      background: linear-gradient(180deg, var(--surface), var(--surface-2)); color: var(--text);
+      font: 500 15px/1.4 "Manrope", "Inter", system-ui, sans-serif;
+    }
+    .msg-actions { display: flex; gap: 10px; justify-content: flex-end; align-items: center; }
+    .msg-count { color: var(--subtext); font: 500 12px/1 "Inter", system-ui, sans-serif; margin-right: auto; }
+    .msg-btn {
+      padding: 10px 14px; border-radius: 10px;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, var(--surface), var(--surface-2));
+      color: var(--text); font-weight: 700; cursor: pointer;
+    }
+    .msg-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .msg-btn:hover:not(:disabled) { border-color: rgba(255,255,255,0.25); }
+    .msg-btn:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
+    /* Floating chat bubble */
+    .chat-bubble {
+      position: fixed;
+      z-index: 40;
+      pointer-events: none;
+      will-change: transform, opacity;
+      width: 240px; height: 130px;
+      left: 0; top: 0;
+      transform: translate(-100vw, 100vh) scale(0.96);
+      opacity: 0;
+    }
+    .chat-bubble .bubble-svg {
+      width: 100%; height: 100%; display: block;
+      filter: drop-shadow(0 10px 30px rgba(0,0,0,0.35));
+    }
+    .chat-bubble .bubble-text {
+      position: absolute; inset: 0; display: grid; place-items: center; padding: 12px 16px;
+      color: #111; font: 700 16px/1.2 "Manrope", "Inter", system-ui, sans-serif; text-align: center;
+      text-shadow: none;
+    }
+
+    @keyframes floatUp {
+      0%   { transform: translate(var(--start-x), var(--start-y)) scale(0.96); opacity: 0; }
+      10%  { opacity: 1; }
+      100% { transform: translate(var(--end-x), -10vh) scale(1.0); opacity: 0; }
+    }
+    .chat-bubble.animate {
+      animation: floatUp 8s ease-in forwards;
+    }
 
     @media (max-width: 720px) {
       .cta-row { grid-template-columns: 1fr; }
@@ -391,6 +419,7 @@
       .copy-btn { width: 100%; }
       .container { padding: 22px 18px 18px; }
       .fab-x { right: 18px; bottom: 18px; width: 52px; height: 52px; }
+      .chat-bubble { width: 210px; height: 118px; }
     }
   </style>
 </head>
@@ -399,9 +428,15 @@
 
   <main>
     <section class="container" id="spawn-container" aria-labelledby="hero-heading">
-      <!-- Eyebrow removed per request -->
+      <!-- Eyebrow removed -->
 
-      <h1 id="hero-heading">WEB3 OPAQUE ASSET HINDSIGHT. $WOAH.</h1>
+      <h1 id="hero-heading">
+        <span class="hero-lines">
+          <span class="hero-line">Web3 opaque</span>
+          <span class="hero-line">asset hindsight</span>
+          <span class="hero-tag">$WOAH!</span>
+        </span>
+      </h1>
 
       <div class="subtext">
         <p>Pay to undress them.</p>
@@ -427,17 +462,17 @@
     </section>
   </main>
 
-  <a class="fab-x" href="https://twitter.com/your-handle" target="_blank" rel="noopener noreferrer" title="Want to CTO?" aria-label="Twitter">
+  <!-- X button (now opens message modal) -->
+  <button class="fab-x" id="fab-x" title="Send a message" aria-label="Send a message">
     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
       <path fill="currentColor" d="M18.3 2h3.2L14 10.3l8.2 11.7h-6.5L12 14.7 6.2 22H2.8L10 12.9 2 2h6.5l4.7 6.8L18.3 2z"/>
     </svg>
-  </a>
+  </button>
 
   <footer>
     <p>No community. No tokenomics. Just send nudes.</p>
     <p>
       Disclaimer: Use with caution. In case of extreme usage,
-      <!-- Open in-page modal instead of a new tab -->
       <a href="#" class="modal-link"
          data-modal-src="https://i.kym-cdn.com/entries/icons/original/000/033/758/Screen_Shot_2020-04-28_at_12.21.48_PM.png">
         click here.
@@ -445,7 +480,7 @@
     </p>
   </footer>
 
-  <!-- In-page modal -->
+  <!-- In-page image modal -->
   <div class="modal-backdrop" id="image-modal" role="dialog" aria-modal="true" aria-labelledby="image-modal-title" aria-hidden="true">
     <div class="modal-dialog">
       <button class="modal-close" id="modal-close" aria-label="Close">Close</button>
@@ -455,13 +490,26 @@
     </div>
   </div>
 
+  <!-- Message modal (for X button) -->
+  <div class="msg-backdrop" id="msg-modal" role="dialog" aria-modal="true" aria-labelledby="msg-title" aria-hidden="true">
+    <div class="msg-dialog">
+      <div class="msg-title" id="msg-title">Send a message</div>
+      <textarea id="msg-input" class="msg-input" maxlength="100" placeholder="Type up to 100 characters..."></textarea>
+      <div class="msg-actions">
+        <div class="msg-count" id="msg-count">0 / 100</div>
+        <button class="msg-btn" id="msg-cancel" type="button">Cancel</button>
+        <button class="msg-btn" id="msg-send" type="button" disabled>Send</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live region for small feedback -->
   <div class="visually-hidden" role="status" aria-live="polite" id="sr-feedback"></div>
 
   <script>
     (function () {
       const canvas = document.getElementById('bg-eyes');
       const ctx = canvas.getContext('2d', { alpha: true });
-
       const container = document.getElementById('spawn-container');
 
       const mqReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -479,29 +527,21 @@
       async function copyAddress() {
         const address = (addrEl?.dataset.address || addrEl?.textContent || '').trim();
         if (!address) return;
-
         let success = false;
         try {
           if (navigator.clipboard && navigator.clipboard.writeText) {
             await navigator.clipboard.writeText(address);
             success = true;
-          } else {
-            throw new Error('Clipboard API not available');
-          }
+          } else { throw new Error('Clipboard API not available'); }
         } catch {
           try {
             const ta = document.createElement('textarea');
-            ta.value = address;
-            ta.setAttribute('readonly', '');
-            ta.style.position = 'fixed';
-            ta.style.top = '-9999px';
-            document.body.appendChild(ta);
-            ta.select();
+            ta.value = address; ta.setAttribute('readonly', '');
+            ta.style.position = 'fixed'; ta.style.top = '-9999px';
+            document.body.appendChild(ta); ta.select();
             success = document.execCommand && document.execCommand('copy');
             document.body.removeChild(ta);
-          } catch {
-            success = false;
-          }
+          } catch { success = false; }
         }
         const originalText = 'Copy';
         setFeedback(success ? 'Copied!' : 'Copy failed');
@@ -509,80 +549,52 @@
       }
       if (copyBtn) copyBtn.addEventListener('click', copyAddress);
 
-      // ===== Eyes logic (as before) =====
+      // ===== Eyes logic (container spawn, 40% overflow, two-pass pupils) =====
       let dpr = 1;
-
       function sizeCanvas() {
         dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-        const w = window.innerWidth;
-        const h = window.innerHeight;
-        canvas.width = Math.floor(w * dpr);
-        canvas.height = Math.floor(h * dpr);
-        canvas.style.width = w + 'px';
-        canvas.style.height = h + 'px';
+        const w = window.innerWidth, h = window.innerHeight;
+        canvas.width = Math.floor(w * dpr); canvas.height = Math.floor(h * dpr);
+        canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-        updateContainerRect();
-        relayoutAllPairs();
-        if (hasReduced) drawOnce();
+        updateContainerRect(); relayoutAllPairs(); if (hasReduced) drawOnce();
       }
 
       let containerRect = container.getBoundingClientRect();
-
-      function updateContainerRect() {
-        containerRect = container.getBoundingClientRect();
-      }
+      function updateContainerRect() { containerRect = container.getBoundingClientRect(); }
 
       const pairs = [];
       let baseRadius = 40;
-
       function computeBaseRadius() {
-        const w = canvas.clientWidth;
-        const h = canvas.clientHeight;
+        const w = canvas.clientWidth, h = canvas.clientHeight;
         baseRadius = Math.max(24, Math.min(80, Math.floor(Math.min(w, h) * 0.08)));
       }
 
-      const overflowFraction = 0.4; // 40%
-
+      const overflowFraction = 0.4;
       function clampPairCenterToContainer(center, r, sep) {
-        const insideMargin = r * (1 - overflowFraction); // 0.6r
+        const insideMargin = r * (1 - overflowFraction);
         const cxMin = (containerRect.left + insideMargin) + sep / 2;
         const cxMax = (containerRect.right - insideMargin) - sep / 2;
         const cyMin = containerRect.top + insideMargin;
         const cyMax = containerRect.bottom - insideMargin;
-
-        const minX = Math.min(cxMin, cxMax);
-        const maxX = Math.max(cxMin, cxMax);
-        const minY = Math.min(cyMin, cyMax);
-        const maxY = Math.max(cyMin, cyMax);
-
-        center.x = Math.min(Math.max(center.x, minX), maxX);
-        center.y = Math.min(Math.max(center.y, minY), maxY);
+        center.x = Math.min(Math.max(center.x, Math.min(cxMin, cxMax)), Math.max(cxMin, cxMax));
+        center.y = Math.min(Math.max(center.y, Math.min(cyMin, cyMax)), Math.max(cyMin, cyMax));
         return center;
       }
 
       function createPairAt(x, y) {
         computeBaseRadius();
         const r = baseRadius;
-
         const gap = -Math.floor(r * 0.35);
         const separation = r * 2 + gap;
-
         const center = clampPairCenterToContainer({ x, y }, r, separation);
-
         const leftCx = center.x - separation / 2;
         const rightCx = center.x + separation / 2;
         const cy = center.y;
-
         const pupilR = Math.floor(r * 0.38);
         const margin = Math.max(2, Math.floor(r * 0.04));
-
         const pair = {
-          center,
-          r,
-          separation,
-          pupilR,
-          margin,
+          center, r, separation, pupilR, margin,
           lineW: Math.max(2, Math.min(4, Math.floor(r * 0.06))),
           eyes: [
             { cx: leftCx, cy, r, pupil: { x: leftCx, y: cy } },
@@ -600,66 +612,32 @@
         const gap = -Math.floor(pair.r * 0.35);
         pair.separation = pair.r * 2 + gap;
         pair.lineW = Math.max(2, Math.min(4, Math.floor(pair.r * 0.06)));
-
         clampPairCenterToContainer(pair.center, pair.r, pair.separation);
-
         const leftCx = pair.center.x - pair.separation / 2;
         const rightCx = pair.center.x + pair.separation / 2;
         const cy = pair.center.y;
-
         pair.eyes[0].cx = leftCx; pair.eyes[0].cy = cy; pair.eyes[0].r = pair.r;
         pair.eyes[1].cx = rightCx; pair.eyes[1].cy = cy; pair.eyes[1].r = pair.r;
-
         pair.eyes[0].pupil.x = leftCx; pair.eyes[0].pupil.y = cy;
         pair.eyes[1].pupil.x = rightCx; pair.eyes[1].pupil.y = cy;
       }
-
-      function relayoutAllPairs() {
-        for (let i = 0; i < pairs.length; i++) relayoutPair(pairs[i]);
-      }
+      function relayoutAllPairs() { for (let i = 0; i < pairs.length; i++) relayoutPair(pairs[i]); }
 
       function containerCenter() {
-        return {
-          x: containerRect.left + containerRect.width / 2,
-          y: containerRect.top + containerRect.height * 0.42
-        };
+        return { x: containerRect.left + containerRect.width / 2, y: containerRect.top + containerRect.height * 0.42 };
       }
-      updateContainerRect();
-      const c0 = containerCenter();
-      createPairAt(c0.x, c0.y);
+      updateContainerRect(); const c0 = containerCenter(); createPairAt(c0.x, c0.y);
 
       let autopilot = !mqFine.matches;
-      let pointerX = c0.x;
-      let pointerY = c0.y;
+      let pointerX = c0.x, pointerY = c0.y;
 
-      function onPointerMove(ev) {
-        if (hasReduced) return;
-        autopilot = false;
-        pointerX = ev.clientX;
-        pointerY = ev.clientY;
-        if (!running) start();
-      }
-      function onPointerLeave() {
-        if (hasReduced) return;
-        const c = containerCenter();
-        pointerX = c.x;
-        pointerY = c.y;
-        if (!running) start();
-      }
-
+      function onPointerMove(ev) { if (hasReduced) return; autopilot = false; pointerX = ev.clientX; pointerY = ev.clientY; if (!running) start(); }
+      function onPointerLeave() { if (hasReduced) return; const c = containerCenter(); pointerX = c.x; pointerY = c.y; if (!running) start(); }
       function onContainerPointerDown(ev) {
-        const x = ev.clientX;
-        const y = ev.clientY;
+        const x = ev.clientX, y = ev.clientY;
         updateContainerRect();
-        if (
-          x >= containerRect.left && x <= containerRect.right &&
-          y >= containerRect.top && y <= containerRect.bottom
-        ) {
-          createPairAt(x, y);
-          pointerX = x;
-          pointerY = y;
-          if (hasReduced) drawOnce();
-          else if (!running) start();
+        if (x >= containerRect.left && x <= containerRect.right && y >= containerRect.top && y <= containerRect.bottom) {
+          createPairAt(x, y); pointerX = x; pointerY = y; if (hasReduced) drawOnce(); else if (!running) start();
         }
       }
 
@@ -670,224 +648,178 @@
         const ay = (Math.cos(time * 0.43) + Math.sin(time * 0.21 + 0.7)) * 0.25;
         const maxX = Math.min(containerRect.width * 0.25, 160);
         const maxY = Math.min(containerRect.height * 0.22, 140);
-        pointerX = cx + maxX * ax;
-        pointerY = cy + maxY * ay;
+        pointerX = cx + maxX * ax; pointerY = cy + maxY * ay;
       }
-
       function lerp(a, b, t) { return a + (b - a) * t; }
 
+      // Two-pass: pupils always above eyeballs
       function drawEyeball(eye, lineW) {
         const { cx, cy, r } = eye;
+        ctx.save(); ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.35)'; ctx.shadowBlur = r * 0.6; ctx.shadowOffsetY = r * 0.12;
+        ctx.fillStyle = 'rgba(0,0,0,0)'; ctx.fill(); ctx.restore();
 
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(cx, cy, r, 0, Math.PI * 2);
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.35)';
-        ctx.shadowBlur = r * 0.6;
-        ctx.shadowOffsetY = r * 0.12;
-        ctx.fillStyle = 'rgba(0,0,0,0)';
-        ctx.fill();
-        ctx.restore();
-
-        ctx.beginPath();
-        ctx.arc(cx, cy, r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(250, 214, 190, 0.98)';
-        ctx.fill();
-        ctx.lineWidth = lineW;
-        ctx.strokeStyle = 'rgba(0,0,0,0.9)';
-        ctx.stroke();
+        ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(250, 214, 190, 0.98)'; ctx.fill();
+        ctx.lineWidth = lineW; ctx.strokeStyle = 'rgba(0,0,0,0.9)'; ctx.stroke();
 
         const gH = ctx.createRadialGradient(cx - r * 0.35, cy - r * 0.35, 0, cx - r * 0.35, cy - r * 0.35, r);
-        gH.addColorStop(0.0, 'rgba(255,255,255,0.38)');
-        gH.addColorStop(0.5, 'rgba(255,255,255,0.12)');
-        gH.addColorStop(1.0, 'rgba(255,255,255,0.00)');
-        ctx.fillStyle = gH;
-        ctx.beginPath();
-        ctx.arc(cx, cy, r, 0, Math.PI * 2);
-        ctx.fill();
+        gH.addColorStop(0.0, 'rgba(255,255,255,0.38)'); gH.addColorStop(0.5, 'rgba(255,255,255,0.12)'); gH.addColorStop(1.0, 'rgba(255,255,255,0.00)');
+        ctx.fillStyle = gH; ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill();
 
         const gS = ctx.createRadialGradient(cx + r * 0.35, cy + r * 0.35, 0, cx + r * 0.35, cy + r * 0.35, r);
-        gS.addColorStop(0.0, 'rgba(0,0,0,0.24)');
-        gS.addColorStop(0.6, 'rgba(0,0,0,0.10)');
-        gS.addColorStop(1.0, 'rgba(0,0,0,0.00)');
-        ctx.fillStyle = gS;
-        ctx.beginPath();
-        ctx.arc(cx, cy, r, 0, Math.PI * 2);
-        ctx.fill();
+        gS.addColorStop(0.0, 'rgba(0,0,0,0.24)'); gS.addColorStop(0.6, 'rgba(0,0,0,0.10)'); gS.addColorStop(1.0, 'rgba(0,0,0,0.00)');
+        ctx.fillStyle = gS; ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill();
 
         const rim = ctx.createRadialGradient(cx, cy, r * 0.6, cx, cy, r);
-        rim.addColorStop(0, 'rgba(0,0,0,0)');
-        rim.addColorStop(1, 'rgba(0,0,0,0.14)');
-        ctx.fillStyle = rim;
-        ctx.beginPath();
-        ctx.arc(cx, cy, r, 0, Math.PI * 2);
-        ctx.fill();
+        rim.addColorStop(0, 'rgba(0,0,0,0)'); rim.addColorStop(1, 'rgba(0,0,0,0.14)');
+        ctx.fillStyle = rim; ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill();
       }
-
       function drawPupil(eye, pupilR, lineW) {
-        const px = eye.pupil.x;
-        const py = eye.pupil.y;
-
+        const px = eye.pupil.x, py = eye.pupil.y;
         const pg = ctx.createRadialGradient(px, py, 0, px, py, pupilR);
-        pg.addColorStop(0.0, 'rgba(255, 79, 138, 1)');
-        pg.addColorStop(0.6, 'rgba(255, 112, 158, 0.92)');
-        pg.addColorStop(1.0, 'rgba(255, 158, 188, 0.85)');
-        ctx.fillStyle = pg;
-        ctx.beginPath();
-        ctx.arc(px, py, pupilR, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.lineWidth = lineW;
-        ctx.strokeStyle = 'rgba(0,0,0,0.9)';
-        ctx.stroke();
+        pg.addColorStop(0.0, 'rgba(255, 79, 138, 1)'); pg.addColorStop(0.6, 'rgba(255, 112, 158, 0.92)'); pg.addColorStop(1.0, 'rgba(255, 158, 188, 0.85)');
+        ctx.fillStyle = pg; ctx.beginPath(); ctx.arc(px, py, pupilR, 0, Math.PI * 2); ctx.fill();
+        ctx.lineWidth = lineW; ctx.strokeStyle = 'rgba(0,0,0,0.9)'; ctx.stroke();
 
         const hr = Math.max(2, pupilR * 0.22);
-        ctx.beginPath();
-        ctx.arc(px, py, hr, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(255, 192, 203, 0.96)';
-        ctx.fill();
-        ctx.lineWidth = Math.max(1.6, lineW * 0.8);
-        ctx.strokeStyle = 'rgba(0,0,0,0.9)';
-        ctx.stroke();
+        ctx.beginPath(); ctx.arc(px, py, hr, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 192, 203, 0.96)'; ctx.fill();
+        ctx.lineWidth = Math.max(1.6, lineW * 0.8); ctx.strokeStyle = 'rgba(0,0,0,0.9)'; ctx.stroke();
       }
-
       function updatePupils() {
         for (let i = 0; i < pairs.length; i++) {
-          const pair = pairs[i];
-          const { pupilR, margin } = pair;
+          const pair = pairs[i], { pupilR, margin } = pair;
           for (let j = 0; j < pair.eyes.length; j++) {
-            const eye = pair.eyes[j];
-            const { cx, cy, r } = eye;
-
-            const dx = pointerX - cx;
-            const dy = pointerY - cy;
-            const dist = Math.hypot(dx, dy) || 1;
+            const eye = pair.eyes[j], { cx, cy, r } = eye;
+            const dx = pointerX - cx, dy = pointerY - cy, dist = Math.hypot(dx, dy) || 1;
             const maxOffset = Math.max(0, r - pupilR - margin);
-            const ux = dx / dist;
-            const uy = dy / dist;
-            const tx = cx + ux * Math.min(dist, maxOffset);
-            const ty = cy + uy * Math.min(dist, maxOffset);
-
-            eye.pupil.x = lerp(eye.pupil.x, tx, 0.18);
-            eye.pupil.y = lerp(eye.pupil.y, ty, 0.18);
+            const ux = dx / dist, uy = dy / dist;
+            const tx = cx + ux * Math.min(dist, maxOffset), ty = cy + uy * Math.min(dist, maxOffset);
+            eye.pupil.x = lerp(eye.pupil.x, tx, 0.18); eye.pupil.y = lerp(eye.pupil.y, ty, 0.18);
           }
         }
       }
-
       function drawEyesFrameTwoPass() {
-        const w = canvas.clientWidth, h = canvas.clientHeight;
-        ctx.clearRect(0, 0, w, h);
-
-        for (let i = 0; i < pairs.length; i++) {
-          const pair = pairs[i];
-          drawEyeball(pair.eyes[0], pair.lineW);
-          drawEyeball(pair.eyes[1], pair.lineW);
-        }
-
-        for (let i = 0; i < pairs.length; i++) {
-          const pair = pairs[i];
-          drawPupil(pair.eyes[0], pair.pupilR, pair.lineW);
-          drawPupil(pair.eyes[1], pair.pupilR, pair.lineW);
-        }
+        const w = canvas.clientWidth, h = canvas.clientHeight; ctx.clearRect(0, 0, w, h);
+        for (let i = 0; i < pairs.length; i++) { const p = pairs[i]; drawEyeball(p.eyes[0], p.lineW); drawEyeball(p.eyes[1], p.lineW); }
+        for (let i = 0; i < pairs.length; i++) { const p = pairs[i]; drawPupil(p.eyes[0], p.pupilR, p.lineW); drawPupil(p.eyes[1], p.pupilR, p.lineW); }
       }
-
       function drawStaticFrameTwoPass() {
-        const w = canvas.clientWidth, h = canvas.clientHeight;
-        ctx.clearRect(0, 0, w, h);
-
-        for (let i = 0; i < pairs.length; i++) {
-          const pair = pairs[i];
-          pair.eyes[0].pupil.x = pair.eyes[0].cx; pair.eyes[0].pupil.y = pair.eyes[0].cy;
-          pair.eyes[1].pupil.x = pair.eyes[1].cx; pair.eyes[1].pupil.y = pair.eyes[1].cy;
-        }
-
-        for (let i = 0; i < pairs.length; i++) {
-          const pair = pairs[i];
-          drawEyeball(pair.eyes[0], pair.lineW);
-          drawEyeball(pair.eyes[1], pair.lineW);
-        }
-
-        for (let i = 0; i < pairs.length; i++) {
-          const pair = pairs[i];
-          drawPupil(pair.eyes[0], pair.pupilR, pair.lineW);
-          drawPupil(pair.eyes[1], pair.pupilR, pair.lineW);
-        }
+        const w = canvas.clientWidth, h = canvas.clientHeight; ctx.clearRect(0, 0, w, h);
+        for (let i = 0; i < pairs.length; i++) { const p = pairs[i]; p.eyes[0].pupil.x = p.eyes[0].cx; p.eyes[0].pupil.y = p.eyes[0].cy; p.eyes[1].pupil.x = p.eyes[1].cx; p.eyes[1].pupil.y = p.eyes[1].cy; }
+        for (let i = 0; i < pairs.length; i++) { const p = pairs[i]; drawEyeball(p.eyes[0], p.lineW); drawEyeball(p.eyes[1], p.lineW); }
+        for (let i = 0; i < pairs.length; i++) { const p = pairs[i]; drawPupil(p.eyes[0], p.pupilR, p.lineW); drawPupil(p.eyes[1], p.pupilR, p.lineW); }
       }
-
       function drawOnce() { drawStaticFrameTwoPass(); }
 
-      let running = false;
-      let raf = 0;
+      let running = false, raf = 0;
       function draw(t) {
         const time = t * 0.001;
-
-        if (autopilot && !hasReduced) {
-          autoTarget(time);
-        }
-
-        updatePupils();
-        drawEyesFrameTwoPass();
-
-        if (!hasReduced) {
-          raf = requestAnimationFrame(draw);
-        } else {
-          running = false;
-        }
+        if (autopilot && !hasReduced) { autoTarget(time); }
+        updatePupils(); drawEyesFrameTwoPass();
+        if (!hasReduced) { raf = requestAnimationFrame(draw); } else { running = false; }
       }
-      function start() {
-        if (running || hasReduced) return;
-        running = true;
-        cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(draw);
-      }
+      function start() { if (running || hasReduced) return; running = true; cancelAnimationFrame(raf); raf = requestAnimationFrame(draw); }
 
       sizeCanvas();
-      if (!hasReduced) start();
-      else drawOnce();
-
+      if (!hasReduced) start(); else drawOnce();
       window.addEventListener('resize', () => { sizeCanvas(); }, { passive: true });
-      window.addEventListener('scroll', () => {
-        updateContainerRect();
-        relayoutAllPairs();
-        if (hasReduced) drawOnce();
-      }, { passive: true });
-
+      window.addEventListener('scroll', () => { updateContainerRect(); relayoutAllPairs(); if (hasReduced) drawOnce(); }, { passive: true });
       window.addEventListener('pointermove', onPointerMove, { passive: true });
       window.addEventListener('pointerleave', onPointerLeave, { passive: true });
-
       container.addEventListener('pointerdown', onContainerPointerDown, { passive: true });
 
-      // ===== Modal logic for footer "click here" =====
-      const modalBackdrop = document.getElementById('image-modal');
+      // ===== Image modal (footer "click here") =====
+      const imageModal = document.getElementById('image-modal');
       const modalImg = document.getElementById('modal-img');
       const modalClose = document.getElementById('modal-close');
-      const modalLinks = document.querySelectorAll('.modal-link');
-
-      function openModal(src) {
-        modalImg.src = src;
-        modalBackdrop.classList.add('open');
-        modalBackdrop.setAttribute('aria-hidden', 'false');
-      }
-      function closeModal() {
-        modalBackdrop.classList.remove('open');
-        modalBackdrop.setAttribute('aria-hidden', 'true');
-        modalImg.src = '';
-      }
-
-      modalLinks.forEach(link => {
+      document.querySelectorAll('.modal-link').forEach(link => {
         link.addEventListener('click', (e) => {
           e.preventDefault();
           const src = link.getAttribute('data-modal-src') || link.href;
-          openModal(src);
+          modalImg.src = src;
+          imageModal.classList.add('open');
+          imageModal.setAttribute('aria-hidden', 'false');
         });
       });
+      modalClose.addEventListener('click', () => { imageModal.classList.remove('open'); imageModal.setAttribute('aria-hidden', 'true'); modalImg.src=''; });
+      imageModal.addEventListener('click', (e) => { if (e.target === imageModal) { imageModal.classList.remove('open'); imageModal.setAttribute('aria-hidden', 'true'); modalImg.src=''; } });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { imageModal.classList.remove('open'); imageModal.setAttribute('aria-hidden', 'true'); modalImg.src=''; } });
 
-      modalClose.addEventListener('click', closeModal);
-      modalBackdrop.addEventListener('click', (e) => {
-        if (e.target === modalBackdrop) closeModal();
+      // ===== Message modal + floating chat bubble (X button flow) =====
+      const fabX = document.getElementById('fab-x');
+      const msgModal = document.getElementById('msg-modal');
+      const msgInput = document.getElementById('msg-input');
+      const msgSend = document.getElementById('msg-send');
+      const msgCancel = document.getElementById('msg-cancel');
+      const msgCount = document.getElementById('msg-count');
+
+      function openMsgModal() {
+        msgInput.value = '';
+        msgCount.textContent = '0 / 100';
+        msgSend.disabled = true;
+        msgModal.classList.add('open');
+        msgModal.setAttribute('aria-hidden', 'false');
+        setTimeout(() => msgInput.focus(), 0);
+      }
+      function closeMsgModal() {
+        msgModal.classList.remove('open');
+        msgModal.setAttribute('aria-hidden', 'true');
+      }
+
+      fabX.addEventListener('click', (e) => { e.preventDefault(); openMsgModal(); });
+
+      msgInput.addEventListener('input', () => {
+        const len = msgInput.value.length;
+        msgCount.textContent = len + ' / 100';
+        msgSend.disabled = (len === 0 || len > 100);
       });
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeModal();
+
+      msgCancel.addEventListener('click', closeMsgModal);
+      msgSend.addEventListener('click', () => {
+        const text = msgInput.value.trim().slice(0, 100);
+        if (!text) return;
+        closeMsgModal();
+        spawnChatBubble(text);
       });
+
+      function spawnChatBubble(text) {
+        const bubble = document.createElement('div');
+        bubble.className = 'chat-bubble';
+
+        // Overlapping eyes contour (no pupils), skin fill, black outline
+        const svg = `
+<svg class="bubble-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 130" preserveAspectRatio="xMidYMid meet">
+  <g fill="none" stroke="#000" stroke-width="5">
+    <circle cx="100" cy="65" r="48" fill="var(--skin)"/>
+    <circle cx="140" cy="65" r="48" fill="var(--skin)"/>
+  </g>
+</svg>`;
+        bubble.innerHTML = svg + '<div class="bubble-text"></div>';
+        bubble.querySelector('.bubble-text').textContent = text;
+
+        document.body.appendChild(bubble);
+
+        // Position at X button and animate upward
+        const fabRect = fabX.getBoundingClientRect();
+        const startX = fabRect.left - 160 + fabRect.width / 2; // tweak for nice origin
+        const startY = fabRect.top - 30; // small lift above the button
+        // Slight horizontal drift to center area
+        const endX = Math.max(20, window.innerWidth * 0.25 - 60);
+
+        bubble.style.setProperty('--start-x', startX + 'px');
+        bubble.style.setProperty('--start-y', startY + 'px');
+        bubble.style.setProperty('--end-x', endX + 'px');
+
+        // Use transform: translate(x, y) via keyframes
+        bubble.classList.add('animate');
+
+        bubble.addEventListener('animationend', () => {
+          bubble.remove();
+        }, { once: true });
+      }
+
     })();
   </script>
 </body>
